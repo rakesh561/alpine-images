@@ -21,7 +21,7 @@ RUN apk --no-cache add \
 RUN mkdir -p /root/.ssh && chmod 0600 /root/.ssh
 
 # Configure ssh client
-COPY ssh-config /root/.ssh/config
+#COPY ssh-config /root/.ssh/config
 
 # Install Ansible core 2.11 modules if ansible_install_version is provided
 ARG ansible_install_version
