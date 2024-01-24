@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: comcast-runner
+
+    steps:
+    - uses: actions/checkout@v3
+      
+      # Add support for more platforms with QEMU (optional)
+      # https://github.com/docker/setup-qemu-action
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: Build the Docker image
+      run: DOCKER_BUILDKIT=1 docker buildx build --build-arg ansible_install_version=2.14.6 --build-arg packer_version=1.9.1 --build-arg terraform_version=0.12.24 -t test-image-alpine:testing .     
+    # docker build . --file Dockerfile --tag my-image-name:$(date +%s)
